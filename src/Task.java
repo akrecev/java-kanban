@@ -1,0 +1,54 @@
+public class Task {
+
+    protected String title; // краткое название задачи
+    protected String description; // описание задачи
+    protected int id; // id задачи
+    protected String status; // статус - "NEW", "IN_PROGRESS", "DONE"
+
+    public Task(String title, String description, int id, String status) {
+        this.title = title;
+        this.description = description;
+        this.id = id;
+        this.status = status;
+    }
+
+    // получить название задачи
+    public String getTitle() {
+        return title;
+    }
+
+    // задать название задачи
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    // получить описание задачи
+    public String getDescription() {
+        return description;
+    }
+
+    // задать описание задачи
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    // получить id задачи
+    public int getId() {
+        return id;
+    }
+
+    // установить id задачи
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    // получить статус задачи
+    public String getStatus() {
+        return status;
+    }
+
+    // задать статус задачи
+    public void setStatus(String status) {
+        this.status = status;
+    }
+}
