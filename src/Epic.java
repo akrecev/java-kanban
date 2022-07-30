@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Epic extends Task {
 
@@ -19,7 +18,24 @@ public class Epic extends Task {
         this.subTasksIds = subTasksIds;
     }
 
-
-
-
+    @Override
+    public String toString() {
+        if (subTasksIds != null) {
+            return "Epic{" +
+                    "subTasksIds=" + subTasksIds +
+                    ", title='" + title + '\'' +
+                    ", description='" + description + '\'' +
+                    ", id=" + id +
+                    ", status='" + status + '\'' +
+                    '}';
+        } else {
+            return "Epic{" +
+                    "subTasksIds=null" +
+                    ", title='" + title + '\'' +
+                    ", description='" + description + '\'' +
+                    ", id=" + id +
+                    ", status='" + status + '\'' +
+                    '}';
+        }
+    }
 }
