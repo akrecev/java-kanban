@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TaskManager {
@@ -15,8 +16,8 @@ public class TaskManager {
     /* ------ Методы для задач типа Task ------ */
 
     // получение списка всех задач
-    public ArrayList<Task> getTaskList() {
-        ArrayList<Task> taskList = new ArrayList<>();
+    public List<Task> getTaskList() {
+        List<Task> taskList = new ArrayList<>();
         for (Task task : tasks.values()) {
             taskList.add(task);
         }
@@ -30,7 +31,9 @@ public class TaskManager {
 
     // получение задачи по id
     public Task getTaskById(int id) {
+        //return tasks.containsKey(id) ? tasks.get(id) : null;
         return tasks.containsKey(id) ? tasks.get(id) : null;
+
     }
 
     // создание задачи
@@ -47,9 +50,7 @@ public class TaskManager {
 
     // удаление задачи по идентификатору
     public void deleteTaskById(int id) {
-        if (tasks.containsKey(id)) {
-            tasks.remove(id);
-        }
+        tasks.remove(id);
     }
 
     /* ------ Методы для задач типа Epic ------ */
@@ -81,8 +82,8 @@ public class TaskManager {
 
 
     // получение списка эпиков
-    public ArrayList<Epic> getEpicList() {
-        ArrayList<Epic> epicList = new ArrayList<>();
+    public List<Epic> getEpicList() {
+        List<Epic> epicList = new ArrayList<>();
         for (Epic epic : epics.values()) {
             epicList.add(epic);
         }
@@ -125,9 +126,9 @@ public class TaskManager {
     /* ------ Методы для подзадач типа Subtask ------ */
 
     // Получение списка всех подзадач определенного эпика
-    public ArrayList<Subtask> getSubtaskListByEpic(int id) {
+    public List<Subtask> getSubtaskListByEpic(int id) {
         if (epics.containsKey(id)) {
-            ArrayList<Subtask> subtaskList = new ArrayList<>();
+            List<Subtask> subtaskList = new ArrayList<>();
             for (int i : epics.get(id).subTasksIds) {
                 subtaskList.add(subtasks.get(i));
             }
@@ -137,8 +138,8 @@ public class TaskManager {
     }
 
     // получение списка всех подзадач
-    public ArrayList<Subtask> getSubtaskList() {
-        ArrayList<Subtask> subtaskList = new ArrayList<>();
+    public List<Subtask> getSubtaskList() {
+        List<Subtask> subtaskList = new ArrayList<>();
         for (Subtask subtask : subtasks.values()) {
             subtaskList.add(subtask);
         }
