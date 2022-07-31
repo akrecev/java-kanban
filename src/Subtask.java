@@ -2,7 +2,7 @@ public class Subtask extends Task {
 
     protected int epicId;
 
-    public Subtask(String title, String description, int id, String status, int epicId) {
+    public Subtask(String title, String description, int id, int status, int epicId) {
         super(title, description, id, status);
         this.epicId = epicId;
     }
@@ -22,7 +22,7 @@ public class Subtask extends Task {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", id=" + id +
-                ", status='" + status + '\'' +
+                ", status='" + super.getStatus() + '\'' +
                 '}';
     }
 }

@@ -1,15 +1,22 @@
+import java.util.Map;
+
 public class Task {
 
     protected String title; // краткое название задачи
     protected String description; // описание задачи
     protected int id; // id задачи
-    protected String status; // статус - "NEW", "IN_PROGRESS", "DONE"
+    private String status; // статус - "NEW", "IN_PROGRESS", "DONE"
+    private final Map<Integer, String> STATUS = Map.of(
+            1, "NEW",
+            2, "IN_PROGRESS",
+            3, "DONE"
+    );
 
-    public Task(String title, String description, int id, String status) {
+    public Task(String title, String description, int id, int status) {
         this.title = title;
         this.description = description;
         this.id = id;
-        this.status = status;
+        this.status = STATUS.get(status);
     }
 
     // получить название задачи
@@ -48,8 +55,8 @@ public class Task {
     }
 
     // задать статус задачи
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatus(int status) {
+        this.status = STATUS.get(status);
     }
 
     @Override

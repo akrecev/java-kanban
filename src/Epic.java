@@ -1,20 +1,20 @@
-import java.util.ArrayList;
+import java.util.List;
 
 public class Epic extends Task {
 
-    protected ArrayList<Integer> subTasksIds;
+    protected List<Integer> subTasksIds;
 
 
-    public Epic(String title, String description, int id, String status, ArrayList<Integer> subTasksIds) {
+    public Epic(String title, String description, int id, int status, List<Integer> subTasksIds) {
         super(title, description, id, status);
         this.subTasksIds = subTasksIds;
     }
 
-    public ArrayList<Integer> getSubTasksIds() {
+    public List<Integer> getSubTasksIds() {
         return subTasksIds;
     }
 
-    public void setSubTasksIds(ArrayList<Integer> subTasksIds) {
+    public void setSubTasksIds(List<Integer> subTasksIds) {
         this.subTasksIds = subTasksIds;
     }
 
@@ -26,15 +26,14 @@ public class Epic extends Task {
                     ", title='" + title + '\'' +
                     ", description='" + description + '\'' +
                     ", id=" + id +
-                    ", status='" + status + '\'' +
+                    ", status='" + super.getStatus() + '\'' +
                     '}';
         } else {
             return "Epic{" +
-                    "subTasksIds=null" +
                     ", title='" + title + '\'' +
                     ", description='" + description + '\'' +
                     ", id=" + id +
-                    ", status='" + status + '\'' +
+                    ", status='" + super.getStatus() + '\'' +
                     '}';
         }
     }
