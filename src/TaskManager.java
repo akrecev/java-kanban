@@ -8,20 +8,16 @@ public class TaskManager {
     private int generateId = 1;
 
     // таблицы для хранения данных
-    private Map<Integer, Task> tasks = new HashMap<>();
-    private Map<Integer, Epic> epics = new HashMap<>();
-    private Map<Integer, Subtask> subtasks = new HashMap<>();
+    private final Map<Integer, Task> tasks = new HashMap<>();
+    private final Map<Integer, Epic> epics = new HashMap<>();
+    private final Map<Integer, Subtask> subtasks = new HashMap<>();
 
 
     /* ------ Методы для задач типа Task ------ */
 
     // получение списка всех задач
     public List<Task> getTaskList() {
-        List<Task> taskList = new ArrayList<>();
-        for (Task task : tasks.values()) {
-            taskList.add(task);
-        }
-        return taskList;
+        return new ArrayList<>(tasks.values());
     }
 
     // удаление всех задач
@@ -31,8 +27,7 @@ public class TaskManager {
 
     // получение задачи по id
     public Task getTaskById(int id) {
-        //return tasks.containsKey(id) ? tasks.get(id) : null;
-        return tasks.containsKey(id) ? tasks.get(id) : null;
+        return tasks.getOrDefault(id, null);
 
     }
 
@@ -83,11 +78,7 @@ public class TaskManager {
 
     // получение списка эпиков
     public List<Epic> getEpicList() {
-        List<Epic> epicList = new ArrayList<>();
-        for (Epic epic : epics.values()) {
-            epicList.add(epic);
-        }
-        return epicList;
+        return new ArrayList<>(epics.values());
     }
 
     // удаление всех эпиков
@@ -97,7 +88,7 @@ public class TaskManager {
 
     // получение эпика по id
     public Epic getEpicById(int id) {
-        return epics.containsKey(id) ? epics.get(id) : null;
+        return epics.getOrDefault(id, null);
     }
 
     // создание эпика
@@ -139,11 +130,7 @@ public class TaskManager {
 
     // получение списка всех подзадач
     public List<Subtask> getSubtaskList() {
-        List<Subtask> subtaskList = new ArrayList<>();
-        for (Subtask subtask : subtasks.values()) {
-            subtaskList.add(subtask);
-        }
-        return subtaskList;
+        return new ArrayList<>(subtasks.values());
     }
 
     // удаление всех подзадач
@@ -157,12 +144,11 @@ public class TaskManager {
 
     // получение подзадачи по id
     public Subtask getSubtaskById(int id) {
-        return subtasks.containsKey(id) ? subtasks.get(id) : null;
+        return subtasks.getOrDefault(id, null);
     }
 
     // создание подзадачи
     public int addSubtask(Subtask subtask) {
-        /*Epic epic = epics.get(subtask.getEpicId());*/
         subtask.setId(generateId++); // установка id подзадаче
         subtasks.put(subtask.getId(), subtask); // добавление подзадачи в таблицу позадач
         epics.get(subtask.getEpicId()).subTasksIds.add(subtask.getId()); // добавление id подзадачи в список внутри эпика
