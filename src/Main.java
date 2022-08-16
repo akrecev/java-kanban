@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Поехали!");
 
-        TaskManager taskManager = new TaskManager();
+        InMemoryTaskManager taskManager = new InMemoryTaskManager();
         ArrayList<Integer> subTasksIds1 = new ArrayList<>();
         ArrayList<Integer> subTasksIds2 = new ArrayList<>();
 
