@@ -1,18 +1,8 @@
 package com.yandex.practicum;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public interface TaskManager {
-
-    int generateId = 1;
-
-    // таблицы для хранения данных
-    Map<Integer, Task> tasks = new HashMap<>();
-    Map<Integer, Epic> epics = new HashMap<>();
-    Map<Integer, Subtask> subtasks = new HashMap<>();
-
 
     /* ------ Методы для задач типа com.yandex.practicum.Task ------ */
 
@@ -43,7 +33,7 @@ public interface TaskManager {
     List<Epic> getEpicList();
 
     // удаление всех эпиков
-    void delAllEpics() ;
+    void delAllEpics();
 
     // получение эпика по id
     Epic getEpicById(int id);
@@ -80,4 +70,6 @@ public interface TaskManager {
     // удаление подзадачи по идентификатору
     void deleteSubtaskById(int id);
 
+    // получение история просмотров задач
+    List<Task> getHistory();
 }

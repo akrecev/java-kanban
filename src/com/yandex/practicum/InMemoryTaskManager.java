@@ -203,6 +203,12 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
+    // получение история просмотров задач
+    @Override
+    public List<Task> getHistory() {
+        return historyManager.getHistory();
+    }
+
     // проверка статуса эпика при изменении подзадачи
     public void checkEpicStatus(Subtask subtask) {
         Epic currentEpic = epics.get(subtask.getEpicId());

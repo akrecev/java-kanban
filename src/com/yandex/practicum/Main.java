@@ -1,7 +1,5 @@
 package com.yandex.practicum;
 
-import com.yandex.practicum.Epic;
-import com.yandex.practicum.InMemoryTaskManager;
 
 import java.util.ArrayList;
 
@@ -11,7 +9,6 @@ public class Main {
         System.out.println("Поехали!");
 
         TaskManager taskManager = Managers.getDefault();
-        HistoryManager historyManager = Managers.getDefaultHistory();
 
         ArrayList<Integer> subTasksIds1 = new ArrayList<>();
         ArrayList<Integer> subTasksIds2 = new ArrayList<>();
@@ -55,17 +52,27 @@ public class Main {
         Subtask subtask3Update = new Subtask("подзадача-3", "обновленная тестовая подзадача №3 к эпику-2", 7, Status.DONE, 6);
         taskManager.updateSubtask(subtask3Update);
 
+        System.out.println("История просмотра задач: " + taskManager.getHistory());
+        System.out.println();
         System.out.println("Список задач: " + taskManager.getTaskList().toString());
         System.out.println("Список эпиков: " + taskManager.getEpicList().toString());
         System.out.println("Список подзадач: " + taskManager.getSubtaskList().toString());
         System.out.println("Список подзадач эпика-1: " + taskManager.getSubtaskListByEpic(3));
         System.out.println("Список подзадач эпика-2: " + taskManager.getSubtaskListByEpic(6));
         System.out.println("Задача-1 : " + taskManager.getTaskById(1));
-        System.out.println("Эпик-1 : " + taskManager.getEpicById(3));
-        System.out.println("Эпик-2 : " + taskManager.getEpicById(6));
-        System.out.println("Подзадача-1 : " + taskManager.getSubtaskById(4));
 
-        System.out.println(historyManager.getHistory());
+        System.out.println();
+        System.out.println("История просмотра задач: " + taskManager.getHistory());
+        System.out.println();
+        System.out.println("Эпик-1 : " + taskManager.getEpicById(3));
+        System.out.println();
+        System.out.println("История просмотра задач: " + taskManager.getHistory());
+        System.out.println();
+        System.out.println("Эпик-2 : " + taskManager.getEpicById(6));
+        System.out.println();
+        System.out.println("История просмотра задач: " + taskManager.getHistory());
+        System.out.println();
+        System.out.println("Подзадача-1 : " + taskManager.getSubtaskById(4));
 
 
         System.out.println();
@@ -87,8 +94,9 @@ public class Main {
         System.out.println("Список эпиков: " + taskManager.getEpicList().toString());
         taskManager.delAllEpics();
         System.out.println("Список эпиков: " + taskManager.getEpicList().toString());
+        System.out.println();
 
-        System.out.println(historyManager.getHistory());
+        System.out.println("История просмотра задач: " + taskManager.getHistory());
 
 
     }

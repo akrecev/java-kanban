@@ -1,7 +1,5 @@
 package com.yandex.practicum;
 
-import java.util.Map;
-
 public class Task {
 
     protected String title; // краткое название задачи
