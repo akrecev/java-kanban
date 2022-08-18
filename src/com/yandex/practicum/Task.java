@@ -1,3 +1,5 @@
+package com.yandex.practicum;
+
 import java.util.Map;
 
 public class Task {
@@ -5,18 +7,13 @@ public class Task {
     protected String title; // краткое название задачи
     protected String description; // описание задачи
     protected int id; // id задачи
-    private String status; // статус - "NEW", "IN_PROGRESS", "DONE"
-    private final Map<Integer, String> STATUS = Map.of(
-            1, "NEW",
-            2, "IN_PROGRESS",
-            3, "DONE"
-    );
+    protected Status status; // статус - "NEW", "IN_PROGRESS", "DONE"
 
-    public Task(String title, String description, int id, int status) {
+    public Task(String title, String description, int id, Status status) {
         this.title = title;
         this.description = description;
         this.id = id;
-        this.status = STATUS.get(status);
+        this.status = status;
     }
 
     // получить название задачи
@@ -50,18 +47,18 @@ public class Task {
     }
 
     // получить статус задачи
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
     // задать статус задачи
-    public void setStatus(int status) {
-        this.status = STATUS.get(status);
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     @Override
     public String toString() {
-        return "Task{" +
+        return "com.yandex.practicum.Task{" +
                 "title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", id=" + id +

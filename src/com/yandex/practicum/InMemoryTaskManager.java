@@ -1,9 +1,13 @@
+package com.yandex.practicum;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
+
+    HistoryManager historyManager = Managers.getDefaultHistory();
 
     private int generateId = 1;
 
@@ -30,8 +34,8 @@ public class InMemoryTaskManager implements TaskManager {
     // получение задачи по id
     @Override
     public Task getTaskById(int id) {
+        historyManager.addInHistory(tasks.get(id));
         return tasks.getOrDefault(id, null);
-
     }
 
     // создание задачи
@@ -58,27 +62,27 @@ public class InMemoryTaskManager implements TaskManager {
 
     // обновление статуса эпика
     @Override
-    public int epicStatus(Epic epic) {
+    public Status epicStatus(Epic epic) {
         if (epic.subTasksIds == null) {
-            return 1;
+            return Status.NEW;
         }
         if (!epic.subTasksIds.isEmpty()) {
             boolean isStatusNEW = true;
             boolean isStatusDONE = true;
             for (int id : epic.subTasksIds) {
-                isStatusNEW &= subtasks.get(id).getStatus().equals("NEW");
-                isStatusDONE &= subtasks.get(id).getStatus().equals("DONE");
+                isStatusNEW &= subtasks.get(id).getStatus().equals(Status.NEW);
+                isStatusDONE &= subtasks.get(id).getStatus().equals(Status.DONE);
             }
             if (isStatusNEW) {
-                return 1;
+                return Status.NEW;
             }
             if (isStatusDONE) {
-                return 3;
+                return Status.DONE;
             } else {
-                return 2;
+                return Status.IN_PROGRESS;
             }
         } else {
-            return 1;
+            return Status.NEW;
         }
     }
 
@@ -98,6 +102,7 @@ public class InMemoryTaskManager implements TaskManager {
     // получение эпика по id
     @Override
     public Epic getEpicById(int id) {
+        historyManager.addInHistory(epics.get(id));
         return epics.getOrDefault(id, null);
     }
 
@@ -161,6 +166,7 @@ public class InMemoryTaskManager implements TaskManager {
     // получение подзадачи по id
     @Override
     public Subtask getSubtaskById(int id) {
+        historyManager.addInHistory(subtasks.get(id));
         return subtasks.getOrDefault(id, null);
     }
 

@@ -1,3 +1,5 @@
+package com.yandex.practicum;
+
 import java.util.List;
 
 public class Epic extends Task {
@@ -5,7 +7,7 @@ public class Epic extends Task {
     protected List<Integer> subTasksIds;
 
 
-    public Epic(String title, String description, int id, int status, List<Integer> subTasksIds) {
+    public Epic(String title, String description, int id, Status status, List<Integer> subTasksIds) {
         super(title, description, id, status);
         this.subTasksIds = subTasksIds;
     }
@@ -21,7 +23,7 @@ public class Epic extends Task {
     @Override
     public String toString() {
         if (subTasksIds != null) {
-            return "Epic{" +
+            return "com.yandex.practicum.Epic{" +
                     "subTasksIds=" + subTasksIds +
                     ", title='" + title + '\'' +
                     ", description='" + description + '\'' +
@@ -29,7 +31,7 @@ public class Epic extends Task {
                     ", status='" + super.getStatus() + '\'' +
                     '}';
         } else {
-            return "Epic{" +
+            return "com.yandex.practicum.Epic{" +
                     ", title='" + title + '\'' +
                     ", description='" + description + '\'' +
                     ", id=" + id +
