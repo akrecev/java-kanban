@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
 
-    private HistoryManager historyManager = Managers.getDefaultHistory();
+    private final HistoryManager historyManager = Managers.getDefaultHistory();
 
     private int generateId = 1;
 
