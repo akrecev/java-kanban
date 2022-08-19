@@ -70,6 +70,6 @@ public interface TaskManager {
     // удаление подзадачи по идентификатору
     void deleteSubtaskById(int id);
 
-    // получение история просмотров задач
+    // получение истории просмотров задач
     List<Task> getHistory();
 }

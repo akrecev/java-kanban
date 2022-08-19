@@ -7,7 +7,7 @@ public interface HistoryManager {
     // добавление просмотренной задачи в историю
     void addInHistory(Task task);
 
-    // получение история просмотров задач
+    // получение истории просмотров задач
     List<Task> getHistory();
 
 }

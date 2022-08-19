@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
 
-    HistoryManager historyManager = Managers.getDefaultHistory();
+    private HistoryManager historyManager = Managers.getDefaultHistory();
 
     private int generateId = 1;
 
@@ -203,7 +203,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-    // получение история просмотров задач
+    // получение истории просмотров задач
     @Override
     public List<Task> getHistory() {
         return historyManager.getHistory();
