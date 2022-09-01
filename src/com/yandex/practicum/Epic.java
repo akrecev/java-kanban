@@ -24,18 +24,18 @@ public class Epic extends Task {
     public String toString() {
         if (subTasksIds != null) {
             return "Epic{" +
-//                    "subTasksIds=" + subTasksIds +
-//                    ", title='" + title + '\'' +
-//                    ", description='" + description + '\'' +
+                    "subTasksIds=" + subTasksIds +
+                    ", title='" + title + '\'' +
+                    ", description='" + description + '\'' +
                     ", id=" + id +
-//                    ", status='" + super.getStatus() + '\'' +
+                    ", status='" + super.getStatus() + '\'' +
                     '}';
         } else {
             return "Epic{" +
-//                    ", title='" + title + '\'' +
-//                    ", description='" + description + '\'' +
+                    ", title='" + title + '\'' +
+                    ", description='" + description + '\'' +
                     ", id=" + id +
-//                    ", status='" + super.getStatus() + '\'' +
+                    ", status='" + super.getStatus() + '\'' +
                     '}';
         }
     }

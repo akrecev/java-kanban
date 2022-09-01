@@ -57,10 +57,10 @@ public class Task {
     @Override
     public String toString() {
         return "Task{" +
-//                "title='" + title + '\'' +
-//                ", description='" + description + '\'' +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
                 ", id=" + id +
-//                ", status='" + status + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 }

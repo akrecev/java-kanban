@@ -58,7 +58,6 @@ public class InMemoryHistoryManager implements HistoryManager {
             node.prev.next = node.next;
             if (node.next == null) { // удаляемый узел последний
                 tail = node.prev;
-                tail.next = null;
             } else {
                 node.next.prev = node.prev;
             }
