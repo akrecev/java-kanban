@@ -56,11 +56,11 @@ public class Task {
 
     @Override
     public String toString() {
-        return "com.yandex.practicum.Task{" +
-                "title='" + title + '\'' +
-                ", description='" + description + '\'' +
+        return "Task{" +
+//                "title='" + title + '\'' +
+//                ", description='" + description + '\'' +
                 ", id=" + id +
-                ", status='" + status + '\'' +
+//                ", status='" + status + '\'' +
                 '}';
     }
 }

@@ -19,12 +19,12 @@ public class Subtask extends Task {
 
     @Override
     public String toString() {
-        return "com.yandex.practicum.Subtask{" +
-                "epicId=" + epicId +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
+        return "Subtask{" +
+//                "epicId=" + epicId +
+//                ", title='" + title + '\'' +
+//                ", description='" + description + '\'' +
                 ", id=" + id +
-                ", status='" + super.getStatus() + '\'' +
+//                ", status='" + super.getStatus() + '\'' +
                 '}';
     }
 }
