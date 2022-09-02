@@ -31,8 +31,8 @@ public class InMemoryHistoryManager implements HistoryManager {
         Node currentNode = head;
         List<Task> list = new ArrayList<>();
         while (currentNode != null) {
-            list.add(currentNode.task);
-            currentNode = currentNode.next;
+            list.add(currentNode.getTask());
+            currentNode = currentNode.getNext();
         }
         return list;
     }
@@ -43,29 +43,30 @@ public class InMemoryHistoryManager implements HistoryManager {
         if (head == null) {
             head = node;
         } else {
-            tail.next = node;
-            node.prev = tail;
+            tail.setNext(node);
+            node.setPrev(tail);
         }
         tail = node;
-
     }
 
     public void removeNode(Node node) {
         if (node == null) {
             return;
         }
-        if (node.prev != null) { // удаляемый узел не первый
-            node.prev.next = node.next;
-            if (node.next == null) { // удаляемый узел последний
-                tail = node.prev;
+        if (node.getPrev() != null) { // удаляемый узел не первый
+            node.getPrev().setNext(node.getNext());
+            if (node.getNext() == null) { // удаляемый узел последний
+                tail = node.getPrev();
             } else {
-                node.next.prev = node.prev;
+                node.getNext().setPrev(node.getPrev());
             }
         } else { // удаляемый узел первый
-            head = node.next;
+            head = node.getNext();
             if (head == null) { // удаляемый узел один в списке
                 tail = null;
-            } else head.prev = null;
+            } else {
+                head.setPrev(null);
+            }
         }
     }
 }
