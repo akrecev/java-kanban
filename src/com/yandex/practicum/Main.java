@@ -1,6 +1,8 @@
 package com.yandex.practicum;
 
-import java.util.ArrayList;
+import com.yandex.practicum.managers.Managers;
+import com.yandex.practicum.managers.TaskManager;
+import com.yandex.practicum.tasks.*;
 
 public class Main {
 
@@ -8,28 +10,26 @@ public class Main {
         System.out.println("Поехали!");
         TaskManager taskManager = Managers.getDefault();
 
-        ArrayList<Integer> subTasksIds1 = new ArrayList<>();
-        ArrayList<Integer> subTasksIds2 = new ArrayList<>();
 
-        Task task1 = new Task("Задача-1", "Тестовая задача №1", 0, Status.NEW);
+        Task task1 = new Task(TypeTask.TASK,"Задача-1", "Тестовая задача №1", 0, Status.NEW);
         taskManager.addTask(task1);
 
-        Task task2 = new Task("Задача-2", "Тестовая задача №2", 0, Status.NEW);
+        Task task2 = new Task(TypeTask.TASK, "Задача-2", "Тестовая задача №2", 0, Status.NEW);
         taskManager.addTask(task2);
 
-        Epic epic1 = new Epic("Эпик-1", "Тестовый эпик №1", 0, Status.NEW, subTasksIds1);
+        Epic epic1 = new Epic(TypeTask.EPIC, "Эпик-1", "Тестовый эпик №1", 0, Status.NEW);
         taskManager.addEpic(epic1);
 
-        Subtask subtask1 = new Subtask("подзадача-1", "тестовая подзадача №1 к эпику-1", 0, Status.NEW, 3);
+        Subtask subtask1 = new Subtask(TypeTask.SUBTASK, "подзадача-1", "тестовая подзадача №1 к эпику-1", 0, Status.NEW, 3);
         taskManager.addSubtask(subtask1);
 
-        Subtask subtask2 = new Subtask("подзадача-2", "тестовая подзадача №2 к эпику-1", 0, Status.NEW, 3);
+        Subtask subtask2 = new Subtask(TypeTask.SUBTASK, "подзадача-2", "тестовая подзадача №2 к эпику-1", 0, Status.NEW, 3);
         taskManager.addSubtask(subtask2);
 
-        Subtask subtask3 = new Subtask("подзадача-3", "тестовая подзадача №3 к эпику-1", 0, Status.NEW, 3);
+        Subtask subtask3 = new Subtask(TypeTask.SUBTASK, "подзадача-3", "тестовая подзадача №3 к эпику-1", 0, Status.NEW, 3);
         taskManager.addSubtask(subtask3);
 
-        Epic epic2 = new Epic("Эпик-2", "Тестовый эпик №2", 0, Status.NEW, subTasksIds2);
+        Epic epic2 = new Epic(TypeTask.EPIC, "Эпик-2", "Тестовый эпик №2", 0, Status.NEW);
         taskManager.addEpic(epic2);
 
         System.out.println("Список задач: " + taskManager.getTaskList().toString());

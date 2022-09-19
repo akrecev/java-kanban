@@ -1,4 +1,6 @@
-package com.yandex.practicum;
+package com.yandex.practicum.managers;
+
+import com.yandex.practicum.tasks.Task;
 
 import java.util.List;
 

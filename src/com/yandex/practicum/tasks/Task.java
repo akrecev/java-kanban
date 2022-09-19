@@ -1,4 +1,4 @@
-package com.yandex.practicum;
+package com.yandex.practicum.tasks;
 
 public class Task {
 
@@ -6,12 +6,26 @@ public class Task {
     protected String description; // описание задачи
     protected int id; // id задачи
     protected Status status; // статус - "NEW", "IN_PROGRESS", "DONE"
+    protected TypeTask typeTask; // тип задачи
 
-    public Task(String title, String description, int id, Status status) {
+    public Task(TypeTask typeTask, String title, String description, int id, Status status) {
+        this.typeTask = typeTask;
         this.title = title;
         this.description = description;
         this.id = id;
         this.status = status;
+    }
+
+    public Task(TypeTask typeTask, String title, String description, Status status) {
+        this.typeTask = typeTask;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+    }
+
+    // получить тип задачи
+    public TypeTask getTypeTask() {
+        return typeTask;
     }
 
     // получить название задачи
@@ -63,4 +77,5 @@ public class Task {
                 ", status='" + status + '\'' +
                 '}';
     }
+
 }

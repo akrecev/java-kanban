@@ -1,4 +1,7 @@
-package com.yandex.practicum;
+package com.yandex.practicum.managers;
+
+import com.yandex.practicum.tasks.Node;
+import com.yandex.practicum.tasks.Task;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -14,9 +17,11 @@ public class InMemoryHistoryManager implements HistoryManager {
     // добавление просмотра задачи в список
     @Override
     public void add(Task task) {
-        remove(task.getId());
-        linkLast(task);
-        historyMap.put(task.getId(), tail);
+        if (task != null) {
+            remove(task.getId());
+            linkLast(task);
+            historyMap.put(task.getId(), tail);
+        }
     }
 
     // удаление просмотра задачи из списка

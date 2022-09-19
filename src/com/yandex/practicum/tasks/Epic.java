@@ -1,15 +1,20 @@
-package com.yandex.practicum;
+package com.yandex.practicum.tasks;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Epic extends Task {
 
     protected List<Integer> subTasksIds;
 
+    public Epic(TypeTask typeTask, String title, String description, int id, Status status) {
+        super(typeTask, title, description, id, status);
+        this.subTasksIds = new ArrayList<>();
+    }
 
-    public Epic(String title, String description, int id, Status status, List<Integer> subTasksIds) {
-        super(title, description, id, status);
-        this.subTasksIds = subTasksIds;
+    public Epic(TypeTask typeTask, String title, String description, Status status) {
+        super(typeTask, title, description, status);
+        this.subTasksIds = new ArrayList<>();
     }
 
     public List<Integer> getSubTasksIds() {

@@ -1,10 +1,15 @@
-package com.yandex.practicum;
+package com.yandex.practicum.managers;
+
+import com.yandex.practicum.tasks.Epic;
+import com.yandex.practicum.tasks.Status;
+import com.yandex.practicum.tasks.Subtask;
+import com.yandex.practicum.tasks.Task;
 
 import java.util.List;
 
 public interface TaskManager {
 
-    /* ------ Методы для задач типа com.yandex.practicum.Task ------ */
+    /* ------ Методы для задач типа com.yandex.practicum.tasks.Task ------ */
 
     // получение списка всех задач
     List<Task> getTaskList();
@@ -24,7 +29,7 @@ public interface TaskManager {
     // удаление задачи по идентификатору
     void deleteTaskById(int id);
 
-    /* ------ Методы для задач типа com.yandex.practicum.Epic ------ */
+    /* ------ Методы для задач типа com.yandex.practicum.tasks.Epic ------ */
 
     // обновление статуса эпика
     Status epicStatus(Epic epic);
@@ -47,7 +52,7 @@ public interface TaskManager {
     // удаление эпика по идентификатору
     void deleteEpicById(int id);
 
-    /* ------ Методы для подзадач типа com.yandex.practicum.Subtask ------ */
+    /* ------ Методы для подзадач типа com.yandex.practicum.tasks.Subtask ------ */
 
     // Получение списка всех подзадач определенного эпика
     List<Subtask> getSubtaskListByEpic(int id);
@@ -72,4 +77,7 @@ public interface TaskManager {
 
     // получение истории просмотров задач
     List<Task> getHistory();
+
+    // поиск задачи по id
+    Task findTask(Integer taskId);
 }
