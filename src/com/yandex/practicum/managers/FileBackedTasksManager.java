@@ -9,47 +9,7 @@ import java.util.List;
 
 public class FileBackedTasksManager extends InMemoryTaskManager implements TaskManager {
 
-    private final File file;
-
     public FileBackedTasksManager(File file) {
-        this.file = file;
-    }
-
-    public File getFile() {
-        return file;
-    }
-
-    public static void main(String[] args) {
-        System.out.println("Поехали!");
-        File file = new File("data.csv");
-        FileBackedTasksManager fileBackedTasksManager = loadFromFile(file);
-
-        Task task2 = new Task(TypeTask.TASK, "Задача-2", "Тестовая задача №2", Status.NEW);
-        fileBackedTasksManager.addTask(task2);
-
-        Task task3 = new Task(TypeTask.TASK, "Задача-3", "Тестовая задача №3", Status.NEW);
-        fileBackedTasksManager.addTask(task3);
-
-        Epic epic3 = new Epic(TypeTask.EPIC, "Эпик-3", "Тестовый эпик №3", Status.NEW);
-        fileBackedTasksManager.addEpic(epic3);
-
-        Subtask subtask3 = new Subtask(TypeTask.SUBTASK, "подзадача-3", "тестовая подзадача №3 к эпику-3", Status.NEW, epic3.getId());
-        fileBackedTasksManager.addSubtask(subtask3);
-
-
-        fileBackedTasksManager.getTaskById(task3.getId());
-        fileBackedTasksManager.getTaskById(task2.getId());
-        fileBackedTasksManager.getEpicById(epic3.getId());
-        fileBackedTasksManager.getSubtaskById(subtask3.getId());
-
-        fileBackedTasksManager.save();
-
-        file = new File("save.csv");
-
-        FileBackedTasksManager fileBackedTasksManager2 = loadFromFile(file);
-
-        fileBackedTasksManager2.save();
-
     }
 
     // загрузка TasksManager'а из файла после запуска программы
@@ -59,7 +19,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
             String data = Files.readString(file.toPath());
             String[] lines = data.split(System.lineSeparator());
             List<Integer> history = Collections.emptyList();
-            int generateId = 0;
             for (int i = 1; i < lines.length; i++) {
                 String line = lines[i];
                 if (line.isBlank()) {
@@ -67,14 +26,11 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
                     break;
                 }
                 Task task = CSVFormatter.fromString(line);
-                int id = 0;
                 if (task != null) {
-                    id = task.getId();
-                }
-                if (id > generateId) {
-                    generateId = id;
-                }
-                if (task != null) {
+                    int id = task.getId();
+                    if (id > tasksManager.generateId) {
+                        tasksManager.generateId = id;
+                    }
                     switch (task.getTypeTask()) {
                         case TASK:
                             tasksManager.tasks.put(task.getId(), task);
@@ -99,9 +55,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
             for (Integer taskId : history) {
                 tasksManager.historyManager.add(tasksManager.findTask(taskId));
             }
-
-            // запись максимального id в генератор
-            tasksManager.generateId = generateId;
 
         } catch (IOException e) {
             throw new ManagerSaveException("Ошибка чтения файла");
