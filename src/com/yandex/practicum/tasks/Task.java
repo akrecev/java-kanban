@@ -1,5 +1,8 @@
 package com.yandex.practicum.tasks;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 public class Task {
 
     protected String title; // краткое название задачи
@@ -7,6 +10,8 @@ public class Task {
     protected int id; // id задачи
     protected Status status; // статус - "NEW", "IN_PROGRESS", "DONE"
     protected TypeTask typeTask; // тип задачи
+    protected long duration;
+    protected LocalDateTime startTime;
 
     public Task(TypeTask typeTask, String title, String description, int id, Status status) {
         this.typeTask = typeTask;
@@ -15,12 +20,20 @@ public class Task {
         this.id = id;
         this.status = status;
     }
-
     public Task(TypeTask typeTask, String title, String description, Status status) {
         this.typeTask = typeTask;
         this.title = title;
         this.description = description;
         this.status = status;
+    }
+    public Task(TypeTask typeTask, String title, String description, Status status, long duration,
+                LocalDateTime startTime) {
+        this.typeTask = typeTask;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+        this.duration = duration;
+        this.startTime = startTime;
     }
 
     // получить тип задачи
@@ -68,13 +81,36 @@ public class Task {
         this.status = status;
     }
 
+    public long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return startTime.plusMinutes(duration);
+    }
+
     @Override
     public String toString() {
         return "Task{" +
                 "title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", id=" + id +
-                ", status='" + status + '\'' +
+                ", status=" + status +
+                ", typeTask=" + typeTask +
+                ", duration=" + duration +
+                ", startTime=" + startTime +
                 '}';
     }
 

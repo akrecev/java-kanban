@@ -1,5 +1,7 @@
 package com.yandex.practicum.tasks;
 
+import java.time.LocalDateTime;
+
 public class Subtask extends Task {
 
     protected int epicId;
@@ -12,13 +14,13 @@ public class Subtask extends Task {
         super(typeTask, title, description, status);
         this.epicId = epicId;
     }
+    public Subtask(TypeTask typeTask, String title, String description, Status status, int epicId, long duration, LocalDateTime startTime) {
+        super(typeTask, title, description, status, duration, startTime);
+        this.epicId = epicId;
+    }
 
     public int getEpicId() {
         return epicId;
-    }
-
-    public void setEpicId(int epicId) {
-        this.epicId = epicId;
     }
 
     @Override
@@ -28,7 +30,10 @@ public class Subtask extends Task {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", id=" + id +
-                ", status='" + super.getStatus() + '\'' +
+                ", status=" + status +
+                ", typeTask=" + typeTask +
+                ", duration=" + duration +
+                ", startTime=" + startTime +
                 '}';
     }
 }

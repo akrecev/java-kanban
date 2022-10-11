@@ -77,4 +77,6 @@ public interface TaskManager {
 
     // поиск задачи по id
     Task findTask(Integer taskId);
+
+    List<Task> getPrioritizedTasks();
 }
