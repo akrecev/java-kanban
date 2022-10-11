@@ -6,9 +6,6 @@ import java.util.List;
 public class CSVFormatter {
     final static String SEPARATOR = ",";
 
-    public CSVFormatter() {
-    }
-
     // чтение задачи из строки
     public static Task fromString(String value) {
         String[] data = value.split(SEPARATOR);

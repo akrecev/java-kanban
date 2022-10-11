@@ -54,9 +54,6 @@ public interface TaskManager {
 
     /* ------ Методы для подзадач типа com.yandex.practicum.tasks.Subtask ------ */
 
-    // Получение списка всех подзадач определенного эпика
-    List<Subtask> getSubtaskListByEpic(int id);
-
     // получение списка всех подзадач
     List<Subtask> getSubtaskList();
 

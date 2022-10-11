@@ -1,0 +1,6 @@
+id,type,name,status,description,epic
+100,TASK,task,NEW,description task,
+200,EPIC,epic,NEW,description epic,
+300,SUBTASK,subtask,NEW,description subtask,200
+
+200,300

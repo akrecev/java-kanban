@@ -9,6 +9,8 @@ import java.util.List;
 
 public class FileBackedTasksManager extends InMemoryTaskManager implements TaskManager {
 
+    public FileBackedTasksManager() {
+    }
     public FileBackedTasksManager(File file) {
     }
 
@@ -42,6 +44,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
                             tasksManager.subtasks.put(task.getId(), (Subtask) task);
                             break;
                     }
+                    tasksManager.generateId++;
                 }
             }
 

@@ -69,9 +69,6 @@ public class InMemoryTaskManager implements TaskManager {
     // обновление статуса эпика
     @Override
     public Status epicStatus(Epic epic) {
-        if (epic.getSubTasksIds() == null) {
-            return Status.NEW;
-        }
         if (!epic.getSubTasksIds().isEmpty()) {
             boolean isStatusNEW = true;
             boolean isStatusDONE = true;
@@ -144,19 +141,6 @@ public class InMemoryTaskManager implements TaskManager {
 
     /* ------ Методы для подзадач типа Subtask ------ */
 
-    // Получение списка всех подзадач определенного эпика
-    @Override
-    public List<Subtask> getSubtaskListByEpic(int id) {
-        if (epics.containsKey(id)) {
-            List<Subtask> subtaskList = new ArrayList<>();
-            for (int i : epics.get(id).getSubTasksIds()) {
-                subtaskList.add(subtasks.get(i));
-            }
-            return subtaskList;
-        }
-        return null;
-    }
-
     // получение списка всех подзадач
     @Override
     public List<Subtask> getSubtaskList() {
@@ -171,7 +155,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
         subtasks.forEach((k, v) -> historyManager.remove(v.getId()));
         subtasks.clear();
-
+        epics.forEach((k, v) -> v.setStatus(epicStatus(v)));
     }
 
     // получение подзадачи по id
@@ -232,7 +216,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     // проверка статуса эпика при изменении подзадачи
-    public void checkEpicStatus(Subtask subtask) {
+    private void checkEpicStatus(Subtask subtask) {
         Epic currentEpic = epics.get(subtask.getEpicId());
         currentEpic.setStatus(epicStatus(currentEpic));
     }
