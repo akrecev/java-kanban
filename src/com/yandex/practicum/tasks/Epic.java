@@ -20,18 +20,8 @@ public class Epic extends Task {
         this.subTasksIds = new ArrayList<>();
     }
 
-    public Epic(TypeTask typeTask, String title, String description, Status status, long duration,
-                LocalDateTime startTime) {
-        super(typeTask, title, description, status, duration, startTime);
-        this.subTasksIds = new ArrayList<>();
-    }
-
     public List<Integer> getSubTasksIds() {
         return subTasksIds;
-    }
-
-    public void setSubTasksIds(List<Integer> subTasksIds) {
-        this.subTasksIds = subTasksIds;
     }
 
     @Override

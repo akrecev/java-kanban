@@ -1,10 +1,16 @@
 package com.yandex.practicum.managers;
+
 import com.yandex.practicum.tasks.*;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CSVFormatter {
     final static String SEPARATOR = ",";
+
+    final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     // чтение задачи из строки
     public static Task fromString(String value) {
@@ -12,13 +18,15 @@ public class CSVFormatter {
         switch (data[1]) {
             case "TASK":
                 return new Task(TypeTask.getType(data[1]), data[2], data[4], Integer.parseInt(data[0]),
-                        Status.getStatus(data[3]));
+                        Status.getStatus(data[3]), Long.parseLong(data[5]),
+                        LocalDateTime.parse(data[6], formatter));
             case "EPIC":
                 return new Epic(TypeTask.getType(data[1]), data[2], data[4], Integer.parseInt(data[0]),
                         Status.getStatus(data[3]));
             case "SUBTASK":
                 return new Subtask(TypeTask.getType(data[1]), data[2], data[4], Integer.parseInt(data[0]),
-                        Status.getStatus(data[3]), Integer.parseInt(data[5]));
+                        Status.getStatus(data[3]), Integer.parseInt(data[7]), Long.parseLong(data[5]),
+                        LocalDateTime.parse(data[6], formatter));
             default:
                 return null;
         }
@@ -36,14 +44,30 @@ public class CSVFormatter {
 
     // запись заголовка в строку
     public static String getHeader() {
-        return "id,type,name,status,description,epic";
+        return "id,type,name,status,description,duration,startTime,epic";
     }
 
     // запись задачи типа Task в строку
-    public static String toString(Task task) {
+    public static String toStringTask(Task task) {
         return task.getId() + SEPARATOR + task.getTypeTask() + SEPARATOR
                 + task.getTitle() + SEPARATOR + task.getStatus() + SEPARATOR
-                + task.getDescription() + SEPARATOR;
+                + task.getDescription() + SEPARATOR + task.getDuration() + SEPARATOR
+                + task.getStartTime().format(formatter);
+    }
+
+    // запись задачи типа Task в строку
+    public static String toStringEpic(Epic epic) {
+        return epic.getId() + SEPARATOR + epic.getTypeTask() + SEPARATOR
+                + epic.getTitle() + SEPARATOR + epic.getStatus() + SEPARATOR
+                + epic.getDescription();
+    }
+
+    // запись задачи типа Task в строку
+    public static String toStringSubtask(Subtask subtask) {
+        return subtask.getId() + SEPARATOR + subtask.getTypeTask() + SEPARATOR
+                + subtask.getTitle() + SEPARATOR + subtask.getStatus() + SEPARATOR
+                + subtask.getDescription() + SEPARATOR + subtask.getDuration() + SEPARATOR
+                + subtask.getStartTime().format(formatter) + SEPARATOR + subtask.getEpicId();
     }
 
     // запись истории просмотров в строку

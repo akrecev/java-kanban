@@ -1,10 +1,12 @@
 package com.yandex.practicum.managers;
 
+import com.yandex.practicum.exeptions.TaskValidationException;
 import com.yandex.practicum.tasks.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,10 +20,17 @@ abstract class TaskManagerTest<T extends TaskManager> {
 
     @Test
     void shouldGetTaskList() {
-        task = new Task(TypeTask.TASK, "task", "description task", 1, Status.NEW);
+        taskManager.delAllTasks();
+        task = new Task(TypeTask.TASK, "Task1", "Description Task1", Status.NEW, 300L,
+                LocalDateTime.of(2022, 10, 7, 9, 0));
+        taskManager.addTask(task);
+        Task task2 = new Task(TypeTask.TASK, "Task2", "Description Task2", Status.NEW, 300L,
+                LocalDateTime.of(2022, 10, 8, 9, 0));
+        taskManager.addTask(task2);
+
         assertNotNull(taskManager.getTaskList(), "Список задач отсутствует");
         assertFalse(taskManager.getTaskList().isEmpty(), "Список задач пуст");
-        assertEquals(taskManager.getTaskList().toString(), List.of(task).toString());
+        assertEquals(taskManager.getTaskList().toString(), List.of(task, task2).toString());
     }
 
     @Test
@@ -43,7 +52,8 @@ abstract class TaskManagerTest<T extends TaskManager> {
     @Test
     void shouldGetTaskById() {
         task = taskManager.getTaskById(1);
-        Task taskTest = new Task(TypeTask.TASK, "task", "description task", 1, Status.NEW);
+        Task taskTest = new Task(TypeTask.TASK, "Task1", "Description Task1", 1, Status.NEW, 600L,
+                LocalDateTime.of(2022, 10, 20, 20, 0));
         assertNotNull(task, "Задача не получена");
         assertEquals(task.toString(), taskTest.toString(), "получена другая задача");
     }
@@ -57,8 +67,8 @@ abstract class TaskManagerTest<T extends TaskManager> {
     @Test
     void shouldAddTask() {
         taskManager.delAllTasks();
-        Task task = new Task(TypeTask.TASK, "Test addNewTask", "Test addNewTask description",
-                1, Status.NEW);
+        Task task = new Task(TypeTask.TASK, "Task1", "Description Task1", 1, Status.NEW, 600L,
+                LocalDateTime.of(2022, 10, 20, 20, 0));
         final int taskId = taskManager.addTask(task);
 
         final Task savedTask = taskManager.getTaskById(taskId);
@@ -211,7 +221,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     @Test
     void shouldGetEpicById() {
         assertNotNull(taskManager.getEpicById(2), "эпика с id=2 нет");
-        assertEquals("epic", taskManager.getEpicById(2).getTitle(), "получена другая задача");
+        assertEquals("Epic1", taskManager.getEpicById(2).getTitle(), "получена другая задача");
     }
 
     @Test
@@ -327,7 +337,8 @@ abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(List.of(taskManager.getTaskById(1), taskManager.getEpicById(2),
                         taskManager.getSubtaskById(3)).toString(), taskManager.getHistory().toString(),
                 "неверно отображена история просмотров");
-        Task task2 = new Task(TypeTask.TASK, "task2", "description task2", 4, Status.NEW);
+        Task task2 = new Task(TypeTask.TASK, "task2", "description task2", 4, Status.NEW, 600L,
+                LocalDateTime.of(2022, 6, 20, 20, 0));
         taskManager.addTask(task2);
         assertEquals(List.of(taskManager.getTaskById(4), taskManager.getTaskById(1),
                         taskManager.getEpicById(2), taskManager.getSubtaskById(3)).toString(),
@@ -339,7 +350,8 @@ abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(List.of(taskManager.getEpicById(2), taskManager.getSubtaskById(3)).toString(),
                 taskManager.getHistory().toString(), "перед выполнением теста не загружена история");
         taskManager.getTaskById(1);
-        Task task2 = new Task(TypeTask.TASK, "task2", "description task2", 4, Status.NEW);
+        Task task2 = new Task(TypeTask.TASK, "task2", "description task2", 4, Status.NEW, 600L,
+                LocalDateTime.of(2022, 3, 20, 20, 0));
         taskManager.addTask(task2);
         assertEquals(List.of(taskManager.getTaskById(4), taskManager.getTaskById(1),
                         taskManager.getEpicById(2), taskManager.getSubtaskById(3)).toString(),
@@ -360,4 +372,22 @@ abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(taskManager.getTaskById(1), taskManager.findTask(1),
                 "задача найдена неверно");
     }
+
+    @Test
+    void shouldTaskValidationException() {
+        Task task1 = new Task(TypeTask.TASK, "Task1", "Description Task1", Status.NEW, 300L,
+                LocalDateTime.of(2022, 10, 7, 9, 0));
+        Task task2 = new Task(TypeTask.TASK, "Task1", "Description Task1", Status.NEW, 300L,
+                LocalDateTime.of(2022, 10, 7, 9, 0));
+        final TaskValidationException exception = assertThrows(
+                TaskValidationException.class,
+                () -> {
+                    taskManager.addTask(task1);
+                    taskManager.addTask(task2);
+                }
+        );
+        assertEquals("Новая задача " + task2.getTitle() + " пересекается с существующей: "
+                + task1.getTitle(), exception.getMessage());
+    }
+
 }

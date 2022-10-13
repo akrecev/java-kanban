@@ -37,12 +37,15 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
                     switch (task.getTypeTask()) {
                         case TASK:
                             tasksManager.tasks.put(task.getId(), task);
+                            tasksManager.prioritizedTasks.add(task);
                             break;
                         case EPIC:
                             tasksManager.epics.put(task.getId(), (Epic) task);
+                            tasksManager.updateEpicDurationAndStartEndTime(task.getId());
                             break;
                         case SUBTASK:
                             tasksManager.subtasks.put(task.getId(), (Subtask) task);
+                            tasksManager.prioritizedTasks.add(task);
                             break;
                     }
                     tasksManager.generateId++;
@@ -53,6 +56,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
             for (Subtask subtask : tasksManager.subtasks.values()) {
                 Epic epic = tasksManager.epics.get(subtask.getEpicId());
                 epic.getSubTasksIds().add(subtask.getId());
+                tasksManager.updateEpicDurationAndStartEndTime(subtask.getEpicId());
             }
 
             // восстановление истории
@@ -71,14 +75,13 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
              BufferedWriter br = new BufferedWriter(fileWriter)) {
             br.write(CSVFormatter.getHeader() + System.lineSeparator());
             for (Task task : tasks.values()) {
-                br.write(CSVFormatter.toString(task) + System.lineSeparator());
+                br.write(CSVFormatter.toStringTask(task) + System.lineSeparator());
             }
-            for (Task task : epics.values()) {
-                br.write(CSVFormatter.toString(task) + System.lineSeparator());
+            for (Epic epic : epics.values()) {
+                br.write(CSVFormatter.toStringEpic(epic) + System.lineSeparator());
             }
-            for (Task task : subtasks.values()) {
-                br.write(CSVFormatter.toString(task) + subtasks.get(task.getId()).getEpicId()
-                        + System.lineSeparator());
+            for (Subtask subtask : subtasks.values()) {
+                br.write(CSVFormatter.toStringSubtask(subtask) + System.lineSeparator());
             }
             br.write(System.lineSeparator());
             br.write(CSVFormatter.historyToString(historyManager));

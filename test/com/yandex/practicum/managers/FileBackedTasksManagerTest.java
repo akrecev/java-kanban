@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -202,19 +203,21 @@ class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager>
     @Test
     void shouldSaveToFileNoDownload() {
         FileBackedTasksManager taskManagerLoad = new FileBackedTasksManager();
-        task = new Task(TypeTask.TASK, "task", "description task", 1, Status.NEW);
+        task = new Task(TypeTask.TASK, "Task1", "Description Task1", Status.NEW, 600L,
+                LocalDateTime.of(2022, 10, 20, 20, 0));
         taskManagerLoad.addTask(task);
-        epic = new Epic(TypeTask.EPIC, "epic", "description epic", 2, Status.NEW);
+        epic = new Epic(TypeTask.EPIC, "Epic1", "Description Epic1", Status.NEW);
         taskManagerLoad.addEpic(epic);
-        subtask = new Subtask(TypeTask.SUBTASK, "subtask", "description subtask", 3,
-                Status.NEW, epic.getId());
+        subtask = new Subtask(TypeTask.SUBTASK, "Subtask1", "Description Subtask1",
+                Status.NEW, epic.getId(), 120L,
+                LocalDateTime.of(2022, 10, 21, 20, 0));
         taskManagerLoad.addSubtask(subtask);
         taskManagerLoad.getTaskById(1);
         taskManagerLoad.getEpicById(2);
         taskManagerLoad.getSubtaskById(3);
         taskManagerLoad.save();
         File fileSave = new File("save.csv");
-        super.taskManager = FileBackedTasksManager.loadFromFile(fileSave);
+        taskManager = FileBackedTasksManager.loadFromFile(fileSave);
         assertEquals(taskManagerLoad.getTaskList().get(0).getId(), taskManager.getTaskList().get(0).getId());
         assertEquals(taskManagerLoad.getEpicList().get(0).getId(), taskManager.getEpicList().get(0).getId());
         assertEquals(taskManagerLoad.getSubtaskList().get(0).getId(),
@@ -222,7 +225,4 @@ class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager>
         assertEquals(taskManagerLoad.getHistory().toString(), taskManager.getHistory().toString());
     }
 
-    @Test
-    void save() {
-    }
 }

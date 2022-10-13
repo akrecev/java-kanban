@@ -1,6 +1,5 @@
 package com.yandex.practicum.tasks;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class Task {
@@ -11,7 +10,7 @@ public class Task {
     protected Status status; // статус - "NEW", "IN_PROGRESS", "DONE"
     protected TypeTask typeTask; // тип задачи
     protected long duration;
-    protected LocalDateTime startTime;
+    protected LocalDateTime startTime = LocalDateTime.MAX;
 
     public Task(TypeTask typeTask, String title, String description, int id, Status status) {
         this.typeTask = typeTask;
@@ -35,6 +34,16 @@ public class Task {
         this.duration = duration;
         this.startTime = startTime;
     }
+    public Task(TypeTask typeTask, String title, String description, int id, Status status, long duration,
+                LocalDateTime startTime) {
+        this.typeTask = typeTask;
+        this.title = title;
+        this.description = description;
+        this.id = id;
+        this.status = status;
+        this.duration = duration;
+        this.startTime = startTime;
+    }
 
     // получить тип задачи
     public TypeTask getTypeTask() {
@@ -44,11 +53,6 @@ public class Task {
     // получить название задачи
     public String getTitle() {
         return title;
-    }
-
-    // задать название задачи
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     // получить описание задачи
