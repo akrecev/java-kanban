@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CSVFormatter {
+public class CsvFormatter {
     final static String SEPARATOR = ",";
 
     final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
@@ -18,14 +18,14 @@ public class CSVFormatter {
         switch (data[1]) {
             case "TASK":
                 return new Task(TypeTask.getType(data[1]), data[2], data[4], Integer.parseInt(data[0]),
-                        Status.getStatus(data[3]), Long.parseLong(data[5]),
+                        Status.valueOf(data[3]), Long.parseLong(data[5]),
                         LocalDateTime.parse(data[6], formatter));
             case "EPIC":
                 return new Epic(TypeTask.getType(data[1]), data[2], data[4], Integer.parseInt(data[0]),
-                        Status.getStatus(data[3]));
+                        Status.valueOf(data[3]));
             case "SUBTASK":
                 return new Subtask(TypeTask.getType(data[1]), data[2], data[4], Integer.parseInt(data[0]),
-                        Status.getStatus(data[3]), Integer.parseInt(data[7]), Long.parseLong(data[5]),
+                        Status.valueOf(data[3]), Integer.parseInt(data[7]), Long.parseLong(data[5]),
                         LocalDateTime.parse(data[6], formatter));
             default:
                 return null;

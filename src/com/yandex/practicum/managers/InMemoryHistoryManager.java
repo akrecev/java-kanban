@@ -1,6 +1,6 @@
 package com.yandex.practicum.managers;
 
-import com.yandex.practicum.tasks.Node;
+import com.yandex.practicum.node.Node;
 import com.yandex.practicum.tasks.Task;
 
 import java.util.List;

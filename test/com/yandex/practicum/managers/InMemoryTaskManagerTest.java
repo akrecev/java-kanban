@@ -11,7 +11,9 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager>{
 
     @BeforeEach
     void setUp() {
-        super.taskManager = new InMemoryTaskManager();
+        // создание нового экземпляра InMemoryTaskManager taskManager
+        taskManager = new InMemoryTaskManager();
+        // создание и запись задач
         task = new Task(TypeTask.TASK, "Task1", "Description Task1", Status.NEW, 600L,
                 LocalDateTime.of(2022, 10, 20, 20, 0));
         taskManager.addTask(task);
@@ -21,6 +23,7 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager>{
                 Status.NEW, epic.getId(), 120L,
                 LocalDateTime.of(2022, 10, 21, 20, 0));
         taskManager.addSubtask(subtask);
+        // вызов задач для создания истории просмотров
         taskManager.getEpicById(2);
         taskManager.getSubtaskById(3);
     }
@@ -30,10 +33,13 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager>{
         TaskManager taskManager = Managers.getDefault();
         epic = new Epic(TypeTask.EPIC, "epic", "description epic", 2, Status.NEW);
         taskManager.addEpic(epic);
+
         Assertions.assertEquals(Status.NEW, epic.getStatus());
+
         subtask = new Subtask(TypeTask.SUBTASK, "subtask", "description subtask", 3,
                 Status.IN_PROGRESS, epic.getId());
         taskManager.addSubtask(subtask);
+
         Assertions.assertEquals(Status.IN_PROGRESS, epic.getStatus());
     }
 }

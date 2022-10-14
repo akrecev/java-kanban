@@ -1,4 +1,6 @@
-package com.yandex.practicum.tasks;
+package com.yandex.practicum.node;
+
+import com.yandex.practicum.tasks.Task;
 
 public class Node {
     private Task task;

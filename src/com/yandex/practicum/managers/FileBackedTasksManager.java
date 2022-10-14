@@ -12,12 +12,10 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
 
     public FileBackedTasksManager() {
     }
-    public FileBackedTasksManager(File file) {
-    }
 
     // загрузка TasksManager'а из файла после запуска программы
     public static FileBackedTasksManager loadFromFile(File file) {
-        FileBackedTasksManager tasksManager = new FileBackedTasksManager(file);
+        FileBackedTasksManager tasksManager = new FileBackedTasksManager();
         try {
             String data = Files.readString(file.toPath());
             String[] lines = data.split(System.lineSeparator());
@@ -25,10 +23,10 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
             for (int i = 1; i < lines.length; i++) {
                 String line = lines[i];
                 if (line.isBlank()) {
-                    history = CSVFormatter.historyFromString(lines[i + 1]);
+                    history = CsvFormatter.historyFromString(lines[i + 1]);
                     break;
                 }
-                Task task = CSVFormatter.fromString(line);
+                Task task = CsvFormatter.fromString(line);
                 if (task != null) {
                     int id = task.getId();
                     if (id > tasksManager.generateId) {
@@ -73,18 +71,18 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
     public void save() {
         try (Writer fileWriter = new FileWriter("save.csv");
              BufferedWriter br = new BufferedWriter(fileWriter)) {
-            br.write(CSVFormatter.getHeader() + System.lineSeparator());
+            br.write(CsvFormatter.getHeader() + System.lineSeparator());
             for (Task task : tasks.values()) {
-                br.write(CSVFormatter.toStringTask(task) + System.lineSeparator());
+                br.write(CsvFormatter.toStringTask(task) + System.lineSeparator());
             }
             for (Epic epic : epics.values()) {
-                br.write(CSVFormatter.toStringEpic(epic) + System.lineSeparator());
+                br.write(CsvFormatter.toStringEpic(epic) + System.lineSeparator());
             }
             for (Subtask subtask : subtasks.values()) {
-                br.write(CSVFormatter.toStringSubtask(subtask) + System.lineSeparator());
+                br.write(CsvFormatter.toStringSubtask(subtask) + System.lineSeparator());
             }
             br.write(System.lineSeparator());
-            br.write(CSVFormatter.historyToString(historyManager));
+            br.write(CsvFormatter.historyToString(historyManager));
         } catch (IOException e) {
             throw new ManagerSaveException("Ошибка записи файла");
         }

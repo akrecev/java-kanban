@@ -28,6 +28,7 @@ class HistoryManagerTest {
     void shouldAddToHistory() {
         historyManager.add(task);
         final List<Task> history = historyManager.getHistory();
+
         assertNotNull(history, "Список истории отсутствует");
         assertEquals(1, history.size(), "Размер истории отличается от 1");
     }
@@ -35,14 +36,19 @@ class HistoryManagerTest {
     @Test
     void shouldHistoryIsEmpty() {
         List<Task> history = historyManager.getHistory();
+
         assertNotNull(history, "Список истории отсутствует");
         assertTrue(history.isEmpty(), "Список истории не пуст");
+
         historyManager.add(task);
         history = historyManager.getHistory();
+
         assertNotNull(history, "Список истории отсутствует");
         assertEquals(1, history.size(), "Размер истории отличается от 1");
+
         historyManager.remove(1);
         history = historyManager.getHistory();
+
         assertNotNull(history, "Список истории отсутствует");
         assertTrue(history.isEmpty(), "Список истории не пуст");
     }
@@ -51,7 +57,9 @@ class HistoryManagerTest {
     void shouldDuplicatingHistoryOneValue() {
         historyManager.add(task);
         historyManager.add(task);
+
         final List<Task> history = historyManager.getHistory();
+
         assertNotNull(history, "Список истории отсутствует");
         assertEquals(1, history.size(), "Размер истории отличается от 1");
     }
@@ -61,12 +69,15 @@ class HistoryManagerTest {
         historyManager.add(task);
         historyManager.add(epic);
         historyManager.add(subtask);
+
         List<Task> history = historyManager.getHistory();
+
         assertNotNull(history, "Список истории отсутствует");
         assertEquals(3, history.size(), "Размер истории отличается от 3");
 
         historyManager.remove(1);
         history = historyManager.getHistory();
+
         assertNotNull(history, "Список истории отсутствует");
         assertEquals(2, history.size(), "Размер истории отличается от 2 после удаления");
         assertEquals(epic, history.get(0), "Нарушен порядок добавления");
@@ -78,12 +89,15 @@ class HistoryManagerTest {
         historyManager.add(task);
         historyManager.add(epic);
         historyManager.add(subtask);
+
         List<Task> history = historyManager.getHistory();
+
         assertNotNull(history, "Список истории отсутствует");
         assertEquals(3, history.size(), "Размер истории отличается от 3");
 
         historyManager.remove(2);
         history = historyManager.getHistory();
+
         assertNotNull(history, "Список истории отсутствует");
         assertEquals(2, history.size(), "Размер истории отличается от 2 после удаления");
         assertEquals(task, history.get(0), "Нарушен порядок добавления");
@@ -95,12 +109,15 @@ class HistoryManagerTest {
         historyManager.add(task);
         historyManager.add(epic);
         historyManager.add(subtask);
+
         List<Task> history = historyManager.getHistory();
+
         assertNotNull(history, "Список истории отсутствует");
         assertEquals(3, history.size(), "Размер истории отличается от 3");
 
         historyManager.remove(3);
         history = historyManager.getHistory();
+
         assertNotNull(history, "Список истории отсутствует");
         assertEquals(2, history.size(), "Размер истории отличается от 2 после удаления");
         assertEquals(task, history.get(0), "Нарушен порядок добавления");

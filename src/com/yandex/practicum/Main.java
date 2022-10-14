@@ -11,6 +11,7 @@ public class Main {
     public static void main(String[] args) {
 
         System.out.println("Поехали!");
+        System.out.println("-----------------------");
 
         File file = new File("data.csv");
         FileBackedTasksManager fileBackedTasksManager = FileBackedTasksManager.loadFromFile(file);
@@ -31,19 +32,31 @@ public class Main {
                 LocalDateTime.of(2022, 11, 2, 0, 0));
         fileBackedTasksManager.addSubtask(subtask2);
 
+        System.out.println("Остановка - Задание списка задач.");
+
         fileBackedTasksManager.getTaskById(task3.getId());
         fileBackedTasksManager.getTaskById(task2.getId());
         fileBackedTasksManager.getEpicById(epic2.getId());
         fileBackedTasksManager.getSubtaskById(subtask2.getId());
 
+        System.out.println("Следующая остановка - Действия над задачами для создания истории");
+
         fileBackedTasksManager.save();
 
         file = new File("save.csv");
 
+        System.out.println("А теперь - Сохранение в файл: save.csv");
+
         FileBackedTasksManager fileBackedTasksManager2 = FileBackedTasksManager.loadFromFile(file);
+
+        System.out.println("В этом месте - Создание второго экземпляра FileBackedTasksManager'а из файла save.csv");
 
         fileBackedTasksManager2.save();
 
+        System.out.println("Ну и запись fileBackedTasksManager2 в файл save.csv");
+
+
+        System.out.println("-----------------------");
         System.out.println("Выходим, приехали!");
 
     }
