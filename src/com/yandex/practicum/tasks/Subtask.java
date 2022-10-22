@@ -1,5 +1,7 @@
 package com.yandex.practicum.tasks;
 
+import com.yandex.practicum.adapters.LocalDateTimeAdapter;
+
 import java.time.LocalDateTime;
 
 public class Subtask extends Task {
@@ -30,14 +32,14 @@ public class Subtask extends Task {
     @Override
     public String toString() {
         return "Subtask{" +
-                "epicId=" + epicId +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
+                "title=\"" + title + '\"' +
+                ", description=\"" + description + '\"' +
                 ", id=" + id +
                 ", status=" + status +
                 ", typeTask=" + typeTask +
+                ", epicId=" + epicId +
                 ", duration=" + duration +
-                ", startTime=" + startTime +
+                ", startTime=" + startTime.format(LocalDateTimeAdapter.formatter) +
                 '}';
     }
 }

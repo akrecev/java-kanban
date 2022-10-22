@@ -1,10 +1,10 @@
 id,type,name,status,description,duration,startTime,epic
-1,TASK,Task1,NEW,Description task1,600,20/10/2022 20:00
-4,TASK,Задача-2,NEW,Тестовая задача №2,500,01/11/2022 00:00
-5,TASK,Задача-3,NEW,Тестовая задача №3,500,20/11/2022 00:00
-2,EPIC,Epic1,DONE,Description epic1
-6,EPIC,Эпик-3,NEW,Тестовый эпик №3
-3,SUBTASK,Sub Task1,DONE,Description sub task1,120,21/10/2022 20:00,2
-7,SUBTASK,подзадача-3,NEW,тестовая подзадача №3 к эпику-3,500,02/11/2022 00:00,6
+1,TASK,Task1,NEW,Description Task1,500,01/11/2022 00:00
+4,TASK,Task2,IN_PROGRESS,Description Task2,500,01/11/2023 00:00
+2,EPIC,Epic1,NEW,Description Epic1
+5,EPIC,Epic2,DONE,Description Epic2
+3,SUBTASK,Subtask1,NEW,Description Subtask1,120,21/10/2022 20:00,2
+6,SUBTASK,Subtask2,DONE,Description Subtask2,120,21/10/2023 20:00,5
+7,SUBTASK,Subtask3,DONE,Description Subtask3,120,21/01/2023 20:00,5
 
-2,3,5,4,6,7
+1,2,3

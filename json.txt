@@ -1,0 +1,69 @@
+{"title":"Task1","description":"Description Task1","id":1,"status":"NEW","typeTask":"TASK","duration":500,"startTime":"01/11/2022 00:00"}
+
+________________________________________________________________
+
+{
+	"title": "Task1",
+	"description": "Description Task1",
+	"id": 1,
+	"status": "NEW",
+	"typeTask": "TASK",
+	"duration": 500,
+	"startTime": "01/11/2022 00:00"
+}
+
+_________________________________________________________________
+
+{
+	"1": {
+		"title": "Task1",
+		"description": "Description Task1",
+		"id": 1,
+		"status": "NEW",
+		"typeTask": "TASK",
+		"duration": 500,
+		"startTime": "01/11/2022 00:00"
+	},
+	"4": {
+		"title": "Task2",
+		"description": "Description Task2",
+		"id": 4,
+		"status": "IN_PROGRESS",
+		"typeTask": "TASK",
+		"duration": 500,
+		"startTime": "01/11/2023 00:00"
+	}
+}
+
+_________________________________________________________________
+
+{
+	"2": {
+		"subTasksIds": [
+			3
+		],
+		"endTime": "21/10/2022 22:00",
+		"title": "Epic1",
+		"description": "Description Epic1",
+		"id": 2,
+		"status": "NEW",
+		"typeTask": "EPIC",
+		"duration": 120,
+		"startTime": "21/10/2022 20:00"
+	},
+	"5": {
+		"subTasksIds": [
+			6,
+			7
+		],
+		"endTime": "21/10/2023 22:00",
+		"title": "Epic2",
+		"description": "Description Epic2",
+		"id": 5,
+		"status": "DONE",
+		"typeTask": "EPIC",
+		"duration": 240,
+		"startTime": "21/01/2023 20:00"
+	}
+}
+

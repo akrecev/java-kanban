@@ -15,4 +15,7 @@ public interface HistoryManager {
     // получение истории просмотров задач
     List<Task> getHistory();
 
+    // получение истории просмотров задач - список из id
+    public List<Integer> getHistoryIds();
+
 }

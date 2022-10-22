@@ -1,5 +1,7 @@
 package com.yandex.practicum.tasks;
 
+import com.yandex.practicum.adapters.LocalDateTimeAdapter;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -112,13 +114,13 @@ public class Task {
     @Override
     public String toString() {
         return "Task{" +
-                "title='" + title + '\'' +
-                ", description='" + description + '\'' +
+                "title=\"" + title + '\"' +
+                ", description=\"" + description + '\"' +
                 ", id=" + id +
                 ", status=" + status +
                 ", typeTask=" + typeTask +
                 ", duration=" + duration +
-                ", startTime=" + startTime +
+                ", startTime=" + startTime.format(LocalDateTimeAdapter.formatter) +
                 '}';
     }
 

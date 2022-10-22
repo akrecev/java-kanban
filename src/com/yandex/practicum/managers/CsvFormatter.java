@@ -1,16 +1,14 @@
 package com.yandex.practicum.managers;
 
+import com.yandex.practicum.adapters.LocalDateTimeAdapter;
 import com.yandex.practicum.tasks.*;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CsvFormatter {
     final static String SEPARATOR = ",";
-
-    final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     // чтение задачи из строки
     public static Task fromString(String value) {
@@ -19,14 +17,14 @@ public class CsvFormatter {
             case "TASK":
                 return new Task(TypeTask.getType(data[1]), data[2], data[4], Integer.parseInt(data[0]),
                         Status.valueOf(data[3]), Long.parseLong(data[5]),
-                        LocalDateTime.parse(data[6], formatter));
+                        LocalDateTime.parse(data[6], LocalDateTimeAdapter.formatter));
             case "EPIC":
                 return new Epic(TypeTask.getType(data[1]), data[2], data[4], Integer.parseInt(data[0]),
                         Status.valueOf(data[3]));
             case "SUBTASK":
                 return new Subtask(TypeTask.getType(data[1]), data[2], data[4], Integer.parseInt(data[0]),
                         Status.valueOf(data[3]), Integer.parseInt(data[7]), Long.parseLong(data[5]),
-                        LocalDateTime.parse(data[6], formatter));
+                        LocalDateTime.parse(data[6], LocalDateTimeAdapter.formatter));
             default:
                 return null;
         }
@@ -52,7 +50,7 @@ public class CsvFormatter {
         return task.getId() + SEPARATOR + task.getTypeTask() + SEPARATOR
                 + task.getTitle() + SEPARATOR + task.getStatus() + SEPARATOR
                 + task.getDescription() + SEPARATOR + task.getDuration() + SEPARATOR
-                + task.getStartTime().format(formatter);
+                + task.getStartTime().format(LocalDateTimeAdapter.formatter);
     }
 
     // запись задачи типа Task в строку
@@ -67,7 +65,7 @@ public class CsvFormatter {
         return subtask.getId() + SEPARATOR + subtask.getTypeTask() + SEPARATOR
                 + subtask.getTitle() + SEPARATOR + subtask.getStatus() + SEPARATOR
                 + subtask.getDescription() + SEPARATOR + subtask.getDuration() + SEPARATOR
-                + subtask.getStartTime().format(formatter) + SEPARATOR + subtask.getEpicId();
+                + subtask.getStartTime().format(LocalDateTimeAdapter.formatter) + SEPARATOR + subtask.getEpicId();
     }
 
     // запись истории просмотров в строку

@@ -1,5 +1,7 @@
 package com.yandex.practicum.tasks;
 
+import com.yandex.practicum.adapters.LocalDateTimeAdapter;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,21 +39,21 @@ public class Epic extends Task {
     public String toString() {
         if (subTasksIds != null) {
             return "Epic{" +
-                    "subTasksIds=" + subTasksIds +
-                    ", title='" + title + '\'' +
-                    ", description='" + description + '\'' +
+                    "title=\"" + title + '"' +
+                    ", description=\"" + description + '\"' +
                     ", id=" + id +
-                    ", status='" + super.getStatus() + '\'' +
-                    ", endTime=" + endTime +
+                    ", status=\"" + super.getStatus() + '\"' +
+                    ", subTasksIds=" + subTasksIds +
                     ", duration=" + duration +
-                    ", startTime=" + startTime +
+                    ", startTime=" + startTime.format(LocalDateTimeAdapter.formatter) +
+                    ", endTime=" + endTime.format(LocalDateTimeAdapter.formatter) +
                     '}';
         } else {
             return "Epic{" +
-                    ", title='" + title + '\'' +
-                    ", description='" + description + '\'' +
+                    ", title=\"" + title + '"' +
+                    ", description=\"" + description + '\"' +
                     ", id=" + id +
-                    ", status='" + super.getStatus() + '\'' +
+                    ", status=\"" + super.getStatus() + '\"' +
                     '}';
         }
     }

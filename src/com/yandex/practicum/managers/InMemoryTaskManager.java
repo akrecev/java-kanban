@@ -19,6 +19,22 @@ public class InMemoryTaskManager implements TaskManager {
     protected final Map<Integer, Task> tasks = new HashMap<>();
     protected final Map<Integer, Epic> epics = new HashMap<>();
     protected final Map<Integer, Subtask> subtasks = new HashMap<>();
+
+    @Override
+    public Map<Integer, Task> getTasks() {
+        return tasks;
+    }
+
+    @Override
+    public Map<Integer, Epic> getEpics() {
+        return epics;
+    }
+
+    @Override
+    public Map<Integer, Subtask> getSubtasks() {
+        return subtasks;
+    }
+
     protected final Set<Task> prioritizedTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime));
 
     /* ------ Методы для задач типа Task ------ */
@@ -67,9 +83,11 @@ public class InMemoryTaskManager implements TaskManager {
     // удаление задачи по идентификатору
     @Override
     public void deleteTaskById(int id) {
-        historyManager.remove(id);
-        prioritizedTasks.remove(tasks.get(id));
-        tasks.remove(id);
+        if (tasks.containsValue(getTaskById(id))) {
+            historyManager.remove(id);
+            prioritizedTasks.remove(tasks.get(id));
+            tasks.remove(id);
+        }
     }
 
     /* ------ Методы для задач типа Epic ------ */
@@ -231,6 +249,12 @@ public class InMemoryTaskManager implements TaskManager {
         return historyManager.getHistory();
     }
 
+    // получение истории просмотров задач - список из id
+    @Override
+    public List<Integer> getHistoryIds() {
+        return historyManager.getHistoryIds();
+    }
+
     // поиск задачи по id
     @Override
     public Task findTask(Integer taskId) {
@@ -258,7 +282,7 @@ public class InMemoryTaskManager implements TaskManager {
         Epic epic = epics.get(epicId);
         List<Integer> subTasksIds = epic.getSubTasksIds();
 
-        if(subTasksIds.isEmpty()) {
+        if (subTasksIds.isEmpty()) {
             epic.setDuration(0L);
             return;
         }
@@ -290,11 +314,14 @@ public class InMemoryTaskManager implements TaskManager {
             if (currentTask.getStartTime() == LocalDateTime.MAX) {
                 return;
             }
+            if (currentTask.getId() == task.getId()) {
+                return;
+            }
             boolean isValid = (task.getStartTime().isBefore(currentTask.getStartTime())
                     && task.getEndTime().isBefore(currentTask.getEndTime()))
                     || (task.getStartTime().isAfter(currentTask.getStartTime())
                     && task.getEndTime().isAfter(currentTask.getEndTime()));
-            if(!isValid) {
+            if (!isValid) {
                 throw new TaskValidationException("Новая задача " + task.getTitle() + " пересекается с существующей: "
                         + currentTask.getTitle());
             }

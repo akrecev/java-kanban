@@ -6,10 +6,17 @@ import com.yandex.practicum.tasks.Subtask;
 import com.yandex.practicum.tasks.Task;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TaskManager {
 
     /* ------ Методы для задач типа com.yandex.practicum.tasks.Task ------ */
+
+    Map<Integer, Task> getTasks();
+
+    Map<Integer, Epic> getEpics();
+
+    Map<Integer, Subtask> getSubtasks();
 
     // получение списка всех задач
     List<Task> getTaskList();
@@ -74,6 +81,9 @@ public interface TaskManager {
 
     // получение истории просмотров задач
     List<Task> getHistory();
+
+    // получение истории просмотров задач - список из id
+    List<Integer> getHistoryIds();
 
     // поиск задачи по id
     Task findTask(Integer taskId);
