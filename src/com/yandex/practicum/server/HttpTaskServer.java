@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
@@ -24,10 +25,6 @@ public class HttpTaskServer {
     private final HttpServer httpServer;
     private final Gson gson;
     private final TaskManager taskManager;
-
-    public HttpTaskServer() throws IOException {
-        this(Managers.getDefault());
-    }
 
     public HttpTaskServer(TaskManager taskManager) throws IOException {
         this.taskManager = taskManager;
@@ -54,6 +51,7 @@ public class HttpTaskServer {
         private String method;
         private String query;
         private String path;
+        private final Charset CHARSET = StandardCharsets.UTF_8;
 
 
         @Override
@@ -64,7 +62,7 @@ public class HttpTaskServer {
             query = httpExchange.getRequestURI().getQuery();
             String pathShort = httpExchange.getRequestURI().getPath().replaceFirst("/tasks/", "");
             InputStream bodyStream = httpExchange.getRequestBody();
-            String bodyString = new String(bodyStream.readAllBytes(), StandardCharsets.UTF_8);
+            String bodyString = new String(bodyStream.readAllBytes(), CHARSET);
 
             String response = "";
             int statusCode = 200;
@@ -83,7 +81,8 @@ public class HttpTaskServer {
                             Task task = taskManager.getTaskById(id);
                             response = gson.toJson(task);
                         } else {
-                            response = "Задачи с id:" + id + " отсутствует";
+                            statusCode = 404;
+                            response = "Задача с id:" + id + " отсутствует";
                         }
                         printRequest();
                     } else if (method.equals("POST")) {
@@ -93,14 +92,15 @@ public class HttpTaskServer {
                             taskManager.updateTask(taskFromJson);
                             if (taskManager.getTasks().containsValue(taskFromJson)) {
                                 response = "Задача успешно обновлена";
+                                statusCode = 202;
                             }
                         } else {
                             taskManager.addTask(taskFromJson);
                             if (taskManager.getTasks().containsValue(taskFromJson)) {
                                 response = "Задача успешно добавлена, присвоен id:" + taskFromJson.getId();
+                                statusCode = 201;
                             }
                         }
-                        statusCode = 201;
                         printRequest();
                     }
                     if (method.equals("DELETE") && query == null) {
@@ -118,6 +118,7 @@ public class HttpTaskServer {
                                 response = "Задача id:" + id + " удалена";
                             }
                         } else {
+                            statusCode = 404;
                             response = "Задача id:" + id + " отсутствует";
                         }
                         printRequest();
@@ -136,6 +137,7 @@ public class HttpTaskServer {
                             Subtask subtask = taskManager.getSubtaskById(id);
                             response = gson.toJson(subtask);
                         } else {
+                            statusCode = 404;
                             response = "Подзадача с id:" + id + " отсутствует";
                         }
                         printRequest();
@@ -146,14 +148,15 @@ public class HttpTaskServer {
                             taskManager.updateSubtask(subtaskFromJson);
                             if (taskManager.getSubtasks().containsValue(subtaskFromJson)) {
                                 response = "Подзадача успешно обновлена";
+                                statusCode = 202;
                             }
                         } else {
                             taskManager.addSubtask(subtaskFromJson);
                             if (taskManager.getSubtasks().containsValue(subtaskFromJson)) {
                                 response = "Подзадача успешно добавлена, присвоен id:" + subtaskFromJson.getId();
+                                statusCode = 201;
                             }
                         }
-                        statusCode = 201;
                         printRequest();
                     }
                     if (method.equals("DELETE") && query == null) {
@@ -171,6 +174,7 @@ public class HttpTaskServer {
                                 response = "Подзадача id:" + id + " удалена";
                             }
                         } else {
+                            statusCode = 404;
                             response = "Подзадача id:" + id + " отсутствует";
                         }
                         printRequest();
@@ -189,6 +193,7 @@ public class HttpTaskServer {
                             Epic epic = taskManager.getEpicById(id);
                             response = gson.toJson(epic);
                         } else {
+                            statusCode = 404;
                             response = "Эпик с id:" + id + " отсутствует";
                         }
                         printRequest();
@@ -199,14 +204,15 @@ public class HttpTaskServer {
                             taskManager.updateEpic(epicFromJson);
                             if (taskManager.getEpics().containsValue(epicFromJson)) {
                                 response = "Эпик успешно обновлен";
+                                statusCode = 202;
                             }
                         } else {
                             taskManager.addEpic(epicFromJson);
                             if (taskManager.getEpics().containsValue(epicFromJson)) {
                                 response = "Эпик успешно добавлен, присвоен id:" + epicFromJson.getId();
+                                statusCode = 201;
                             }
                         }
-                        statusCode = 201;
                         printRequest();
                     }
                     if (method.equals("DELETE") && query == null) {
@@ -224,6 +230,7 @@ public class HttpTaskServer {
                                 response = "Эпик id:" + id + " удален";
                             }
                         } else {
+                            statusCode = 404;
                             response = "Эпик id:" + id + " отсутствует";
                         }
                         printRequest();
@@ -241,7 +248,7 @@ public class HttpTaskServer {
 
                 case "history":
                     if (method.equals("GET")) {
-                        List<Task> history = taskManager.getHistory();
+                        List<Integer> history = taskManager.getHistoryIds();
                         response = gson.toJson(history);
                         printRequest();
                     }
@@ -249,7 +256,7 @@ public class HttpTaskServer {
 
                 case "":
                     if (method.equals("GET")) {
-                        List<Task> prioritizedTasks = taskManager.getPrioritizedTasks();
+                        List<Integer> prioritizedTasks = taskManager.getPrioritizedTasksIds();
                         response = gson.toJson(prioritizedTasks);
                         printRequest();
                     }
@@ -257,8 +264,8 @@ public class HttpTaskServer {
 
                 default:
                     System.out.println("Неизвестный запрос");
-                    statusCode = 404;
-                    response = "Not Found";
+                    statusCode = 400;
+                    response = "Неизвестный запрос";
             }
 
             httpExchange.sendResponseHeaders(statusCode, 0);

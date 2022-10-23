@@ -15,16 +15,6 @@ public class Task {
     protected long duration;
     protected LocalDateTime startTime;
 
-    public Task(TypeTask typeTask, String title, String description, Status status) {
-        this(typeTask, title, description, 1, status, 0L, LocalDateTime.MAX);
-    }
-    public Task(TypeTask typeTask, String title, String description, int id, Status status) {
-        this(typeTask, title, description, id, status, 0L, LocalDateTime.MAX);
-    }
-    public Task(TypeTask typeTask, String title, String description, Status status, long duration,
-                LocalDateTime startTime) {
-        this(typeTask, title, description, 1, status, duration, startTime);
-    }
     public Task(TypeTask typeTask, String title, String description, int id, Status status, long duration,
                 LocalDateTime startTime) {
         this.typeTask = typeTask;
@@ -34,6 +24,16 @@ public class Task {
         this.status = status;
         this.duration = duration;
         this.startTime = startTime;
+    }
+    public Task(TypeTask typeTask, String title, String description, Status status, long duration,
+                LocalDateTime startTime) {
+        this(typeTask, title, description, 1, status, duration, startTime);
+    }
+    public Task(TypeTask typeTask, String title, String description, int id, Status status) {
+        this(typeTask, title, description, id, status, 0L, LocalDateTime.MAX);
+    }
+    public Task(TypeTask typeTask, String title, String description, Status status) {
+        this(typeTask, title, description, 1, status, 0L, LocalDateTime.MAX);
     }
 
     // получить тип задачи

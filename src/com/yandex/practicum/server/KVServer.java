@@ -1,14 +1,14 @@
 package com.yandex.practicum.server;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpServer;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * Постман: https://www.getpostman.com/collections/a83b61d9e1c81c10575c
@@ -27,8 +27,37 @@ public class KVServer {
 		server.createContext("/load", this::load);
 	}
 
-	private void load(HttpExchange h) {
-		// TODO Добавьте получение значения по ключу
+	private void load(HttpExchange h) throws IOException {
+		try {
+			System.out.println("\n/load");
+			if (!hasAuth(h)) {
+				System.out.println("Запрос неавторизован, нужен параметр в query API_TOKEN со значением апи-ключа");
+				h.sendResponseHeaders(403, 0);
+				return;
+			}
+			if ("GET".equals(h.getRequestMethod())) {
+				String key = h.getRequestURI().getPath().substring("/load/".length());
+				if (key.isEmpty()) {
+					System.out.println("Key для сохранения пустой. key указывается в пути: /save/{key}");
+					h.sendResponseHeaders(400, 0);
+					return;
+				}
+				String value = readText(h);
+				if (value.isEmpty()) {
+					System.out.println("Value для сохранения пустой. value указывается в теле запроса");
+					h.sendResponseHeaders(400, 0);
+					return;
+				}
+				data.put(key, value);
+				System.out.println("Значение для ключа " + key + " успешно обновлено!");
+				h.sendResponseHeaders(200, 0);
+			} else {
+				System.out.println("/load ждёт GET-запрос, а получил: " + h.getRequestMethod());
+				h.sendResponseHeaders(405, 0);
+			}
+		} finally {
+			h.close();
+		}
 	}
 
 	private void save(HttpExchange h) throws IOException {
@@ -83,6 +112,11 @@ public class KVServer {
 		System.out.println("Открой в браузере http://localhost:" + PORT + "/");
 		System.out.println("API_TOKEN: " + apiToken);
 		server.start();
+	}
+
+	public void stop() {
+		server.stop(0);
+		System.out.println("Сервер на порту " + PORT + " остановлен");
 	}
 
 	private String generateApiToken() {

@@ -271,10 +271,24 @@ public class InMemoryTaskManager implements TaskManager {
         return new ArrayList<>(prioritizedTasks);
     }
 
+    @Override
+    public List<Integer> getPrioritizedTasksIds() {
+        List<Integer> list = new ArrayList<>();
+        prioritizedTasks.forEach(v -> list.add(v.getId()));
+        return list;
+    }
+
+
+
     // проверка статуса эпика при изменении подзадачи
     private void checkEpicStatus(Subtask subtask) {
         Epic currentEpic = epics.get(subtask.getEpicId());
         currentEpic.setStatus(epicStatus(currentEpic));
+    }
+
+    @Override
+    public int generateId() {
+        return generateId++;
     }
 
     // обновление времени эпика

@@ -12,14 +12,18 @@ public class Epic extends Task {
 
     protected LocalDateTime endTime;
 
-    public Epic(TypeTask typeTask, String title, String description, int id, Status status) {
+    public Epic(TypeTask typeTask, String title, String description, int id, Status status, List<Integer> subTasksIds) {
         super(typeTask, title, description, id, status);
-        this.subTasksIds = new ArrayList<>();
+        this.subTasksIds = subTasksIds;
+        this.endTime = super.getEndTime();
+    }
+
+    public Epic(TypeTask typeTask, String title, String description, int id, Status status) {
+        this(typeTask, title, description, id, status, new ArrayList<>());
     }
 
     public Epic(TypeTask typeTask, String title, String description, Status status) {
-        super(typeTask, title, description, status);
-        this.subTasksIds = new ArrayList<>();
+        this(typeTask, title, description, 1, status, new ArrayList<>());
     }
 
     public List<Integer> getSubTasksIds() {
@@ -37,7 +41,7 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        if (subTasksIds != null) {
+        if (true) {
             return "Epic{" +
                     "title=\"" + title + '"' +
                     ", description=\"" + description + '\"' +

@@ -89,4 +89,8 @@ public interface TaskManager {
     Task findTask(Integer taskId);
 
     List<Task> getPrioritizedTasks();
+
+    List<Integer> getPrioritizedTasksIds();
+
+    int generateId();
 }
