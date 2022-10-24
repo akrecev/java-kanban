@@ -13,7 +13,6 @@ public class KVTaskClient {
     private static final String URN_REGISTER = "/register";
     HttpClient client = HttpClient.newHttpClient();
 
-
     public KVTaskClient(int port) {
 
         url = "http://localhost:" + port;
@@ -57,7 +56,7 @@ public class KVTaskClient {
         return "Ошибка получения запроса";
     }
 
-    public void put(String key, String json)  {
+    public void put(String key, String json) {
         if (apiToken == null) {
             System.out.println("API_TOKEN не присвоен");
             return;

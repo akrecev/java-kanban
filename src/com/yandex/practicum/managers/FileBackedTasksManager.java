@@ -13,7 +13,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
     public FileBackedTasksManager() {
     }
 
-    // загрузка TasksManager'а из файла после запуска программы
+    // загрузка TasksManager из файла после запуска программы
     public static FileBackedTasksManager loadFromFile(File file) {
         FileBackedTasksManager tasksManager = new FileBackedTasksManager();
         try {
@@ -50,7 +50,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
                 }
             }
 
-            // восстановление списка subtask'ов у epic'а
+            // восстановление списка subtasks у epic
             for (Subtask subtask : tasksManager.subtasks.values()) {
                 Epic epic = tasksManager.epics.get(subtask.getEpicId());
                 epic.getSubTasksIds().add(subtask.getId());

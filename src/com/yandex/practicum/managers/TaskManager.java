@@ -92,5 +92,4 @@ public interface TaskManager {
 
     List<Integer> getPrioritizedTasksIds();
 
-    int generateId();
 }

@@ -41,7 +41,7 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        if (true) {
+        if (!subTasksIds.isEmpty()) {
             return "Epic{" +
                     "title=\"" + title + '"' +
                     ", description=\"" + description + '\"' +

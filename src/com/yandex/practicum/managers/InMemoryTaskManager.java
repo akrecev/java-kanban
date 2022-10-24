@@ -99,6 +99,9 @@ public class InMemoryTaskManager implements TaskManager {
             boolean isStatusNEW = true;
             boolean isStatusDONE = true;
             for (int id : epic.getSubTasksIds()) {
+                if (subtasks.get(id) == null) {
+                    break;
+                }
                 isStatusNEW &= subtasks.get(id).getStatus().equals(Status.NEW);
                 isStatusDONE &= subtasks.get(id).getStatus().equals(Status.DONE);
             }
@@ -279,16 +282,10 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
 
-
     // проверка статуса эпика при изменении подзадачи
     private void checkEpicStatus(Subtask subtask) {
         Epic currentEpic = epics.get(subtask.getEpicId());
         currentEpic.setStatus(epicStatus(currentEpic));
-    }
-
-    @Override
-    public int generateId() {
-        return generateId++;
     }
 
     // обновление времени эпика
@@ -307,6 +304,9 @@ public class InMemoryTaskManager implements TaskManager {
 
         for (int subTasksId : subTasksIds) {
             Subtask subtask = subtasks.get(subTasksId);
+            if (subtasks.get(subTasksId) == null) {
+                break;
+            }
             LocalDateTime startTime = subtask.getStartTime();
             LocalDateTime endTime = subtask.getEndTime();
             if (startTime.isBefore(startEpic)) {

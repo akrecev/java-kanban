@@ -41,11 +41,14 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
         return list;
     }
+
     // получение истории просмотров задач - список из id
     @Override
     public List<Integer> getHistoryIds() {
         List<Integer> list = new ArrayList<>();
-        historyMap.forEach((k,v) -> list.add(k));
+        for (Task task : getHistory()) {
+            list.add(task.getId());
+        }
         return list;
     }
 

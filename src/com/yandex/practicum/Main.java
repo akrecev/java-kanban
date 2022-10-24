@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws IOException {
 
         KVServer kvServer = Managers.getDefaultKVServer();
         kvServer.start();
@@ -25,8 +25,32 @@ public class Main {
                 task.getEndTime().plusMinutes(10L));
         taskManager.addSubtask(subtask);
 
+        taskManager.getSubtaskById(subtask.getId());
+        taskManager.getEpicById(epic.getId());
+        taskManager.getTaskById(task.getId());
 
+        System.out.println(taskManager.getTaskList());
+        System.out.println(taskManager.getEpicList());
+        System.out.println(taskManager.getSubtaskList());
 
+        taskManager.setSave(false);
 
+        taskManager.delAllTasks();
+        taskManager.delAllEpics();
+        taskManager.delAllSubtask();
+
+        System.out.println(taskManager.getTaskList());
+        System.out.println(taskManager.getEpicList());
+        System.out.println(taskManager.getSubtaskList());
+
+        taskManager.setSave(true);
+
+        taskManager.load();
+
+        System.out.println(taskManager.getTaskList());
+        System.out.println(taskManager.getEpicList());
+        System.out.println(taskManager.getSubtaskList());
+
+        kvServer.stop();
     }
 }

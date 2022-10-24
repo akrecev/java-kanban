@@ -2,6 +2,7 @@ package com.yandex.practicum.server;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.yandex.practicum.managers.FileBackedTasksManager;
 import com.yandex.practicum.managers.Managers;
 import com.yandex.practicum.managers.TaskManager;
 import com.yandex.practicum.tasks.*;
@@ -39,7 +40,7 @@ class HttpTaskServerTest {
     @BeforeEach
     void setUp() throws IOException {
 
-        taskManager = Managers.getDefault();
+        taskManager = new FileBackedTasksManager();
         httpTaskServer = new HttpTaskServer(taskManager);
 
         task = new Task(TypeTask.TASK, "Task1", "Description Task1", Status.NEW, 500L,

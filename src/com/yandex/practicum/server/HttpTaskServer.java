@@ -53,7 +53,6 @@ public class HttpTaskServer {
         private String path;
         private final Charset CHARSET = StandardCharsets.UTF_8;
 
-
         @Override
         public void handle(HttpExchange httpExchange) throws IOException {
 
