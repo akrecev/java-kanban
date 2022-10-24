@@ -44,8 +44,8 @@ public class Main {
 
         httpTaskServer.start();*/
 
+
         HttpTaskManager taskManager = new HttpTaskManager(KVServer.PORT);
-//        KVServer kvServer = Managers.getDefaultKVServer();
 //        Task task = new Task(TypeTask.TASK, "Task1", "Description Task1", Status.NEW, 10L,
 //                LocalDateTime.now());
 //        taskManager.addTask(task);

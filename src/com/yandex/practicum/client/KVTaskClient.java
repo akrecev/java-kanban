@@ -15,6 +15,7 @@ public class KVTaskClient {
 
 
     public KVTaskClient(int port) {
+
         url = "http://localhost/" + port;
         apiToken = register(url);
     }
@@ -30,7 +31,7 @@ public class KVTaskClient {
                 return response.body();
             } else System.out.println("Не удалось получить API_TOKEN. Код ошибки: " + response.statusCode());
         } catch (IOException | InterruptedException e) {
-            System.out.println("Во время выполнения запроса возникла ошибка.\n" +
+            System.out.println("Во время выполнения запроса /register возникла ошибка.\n" +
                     "Проверьте, адрес и повторите попытку.");
         }
         return "неверный API_TOKEN";

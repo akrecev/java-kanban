@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager>{
@@ -29,7 +30,7 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager>{
     }
 
     @Test
-    public void shouldCheckEpicStatus() {
+    public void shouldCheckEpicStatus() throws IOException {
         TaskManager taskManager = Managers.getDefault();
         epic = new Epic(TypeTask.EPIC, "epic", "description epic", 2, Status.NEW);
         taskManager.addEpic(epic);

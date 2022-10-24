@@ -3,10 +3,12 @@ package com.yandex.practicum.managers;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.yandex.practicum.client.KVTaskClient;
+import com.yandex.practicum.server.KVServer;
 import com.yandex.practicum.tasks.Epic;
 import com.yandex.practicum.tasks.Subtask;
 import com.yandex.practicum.tasks.Task;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Map;
@@ -20,7 +22,9 @@ public class HttpTaskManager extends FileBackedTasksManager {
     private static final String SUBTASKS_KEY = "/subtasks";
     private static final String HISTORY_KEY = "/history";
 
-    public HttpTaskManager(int port) {
+    public HttpTaskManager(int port) throws IOException {
+        KVServer kvServer = Managers.getDefaultKVServer();
+        kvServer.start();
         gson = Managers.getGson();
         client = new KVTaskClient(port);
     }
